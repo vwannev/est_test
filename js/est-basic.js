@@ -6,7 +6,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const notionToken = "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"; // 주어진 토큰
         const notionDatabaseId = "1c465b7c8e4d80d3a1b4f0e95a56ffe6"; // 실제 데이터베이스 ID
 
-        const response = await fetch(`https://api.notion.com/v1/databases/${notionDatabaseId}/query`, {
+        const apiUrl = `https://api.notion.com/v1/databases/${notionDatabaseId}/query`;
+        const proxyUrl = "https://cors-anywhere.herokuapp.com/"; // 프록시 서버 주소
+
+        const response = await fetch(proxyUrl + apiUrl, { // 프록시 서버를 통해 API 요청
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${notionToken}`,
