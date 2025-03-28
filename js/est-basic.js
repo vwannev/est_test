@@ -7,12 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const notionDatabaseId = "1c465b7c8e4d80d3a1b4f0e95a56ffe6"; // 실제 데이터베이스 ID
 
         const apiUrl = `https://api.notion.com/v1/databases/${notionDatabaseId}/query`;
-        const proxyUrl = "https://cors-anywhere.herokuapp.com/"; // 프록시 서버 주소
+        const proxyUrl = "https://cors.makemewanne.workers.dev/?url="; // 프록시 서버 주소
 
         const response = await fetch(proxyUrl + apiUrl, { // 프록시 서버를 통해 API 요청
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${notionToken}`,
+                "Authorization": `Bearer ${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}`,
                 "Content-Type": "application/json",
                 "Notion-Version": "2021-05-13" // 최신 버전 확인
             },
