@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const response = await fetch(proxyUrl + apiUrl, { // 프록시 서버를 통해 API 요청
             method: "POST",
             headers: {
-                "Authorization": `Bearer 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`,
+                "Authorization": "Bearer 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",
                 "Content-Type": "application/json",
                 "Notion-Version": "2021-05-13" // 최신 버전 확인
             },
