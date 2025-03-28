@@ -1,0 +1,375 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+* {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0px;
+  height: 100%;
+}
+/* a blue color as a generic focus style */
+button:focus-visible {
+  outline: 2px solid #4a90e2 !important;
+  outline: -webkit-focus-ring-color auto 5px !important;
+}
+a {
+  text-decoration: none;
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  width: 100%;
+  min-width: 375px;
+  min-height: 819px;
+}
+
+.body .wrap {
+  display: flex;
+  flex-direction: column;
+  min-width: 375px;
+  height: 819px;
+  align-items: center;
+  gap: 24px;
+  padding: 0px 24px;
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  background-color: #ffffff;
+}
+
+.body .title {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 62px;
+  background-color: #ffffff;
+}
+
+.body .title-text {
+  position: absolute;
+  width: 238px;
+  top: 14px;
+  left: 0;
+  font-family: "Pretendard-Bold", Helvetica;
+  font-weight: 700;
+  color: #291818;
+  font-size: 22px;
+  letter-spacing: -0.22px;
+  line-height: 30.8px;
+  white-space: nowrap;
+}
+
+.body .contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 57px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.body .info {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 48px;
+}
+
+.body .info-text {
+  position: absolute;
+  width: 275px;
+  top: -1px;
+  left: 0;
+  font-family: "Pretendard-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #313c4c;
+  font-size: 18px;
+  letter-spacing: -0.72px;
+  line-height: 25.2px;
+}
+
+.body .select-section {
+  min-width: 327px;
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.body .select-box {
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.body .sb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #D9D9D9;
+  transition: border-color 0.3s ease;
+}
+
+.body .sb.active {
+  border-color: #191919;
+}
+
+.body .guide {
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+}
+
+.body .guidebox {
+  position: relative;
+  width: 1px;
+  height: 24px;
+}
+
+.body .guidetext {
+  position: relative;
+  flex: 1;
+  font-family: "Pretendard-Medium", Helvetica;
+  font-weight: 500;
+  color: #6b6b6b;
+  font-size: 16px;
+  letter-spacing: -0.40px;
+  line-height: 16px;
+}
+
+.body .element-chevron-down {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.body .dropdown {
+  display: none;
+  position: absolute;
+  width: 100%;
+  top: 45px;
+  left: 0;
+  border: 1px solid #D9D9D9;
+  border-radius: 8px;
+  background-color: white;
+  z-index: 10;
+  padding: 5px 0;
+  font-family: "Pretendard-Medium", Helvetica;
+}
+
+.body .dropdown option {
+  font-family: "Pretendard-Medium", Helvetica;
+  font-size: 16px;
+  color: #191919;
+}
+
+.body .sb.active .dropdown {
+  display: block;
+}
+
+.body .result-nbtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.body .resultbox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px 32px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+  background-color: #191919;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.body .frame {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 27px 27px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.body .div-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.body .text-wrapper {
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Pretendard-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #d6d6d7;
+  font-size: 18px;
+  text-align: center;
+  letter-spacing: -0.72px;
+  line-height: 25.2px;
+  white-space: nowrap;
+}
+
+.body .charge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.body .charge-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.body .num {
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Pretendard-Bold", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 22px;
+  text-align: right;
+  letter-spacing: -0.22px;
+  line-height: 30.8px;
+  white-space: nowrap;
+}
+
+.body .charge-sen {
+  position: relative;
+  width: 82px;
+  height: 31px;
+}
+
+.body .sen {
+  position: absolute;
+  width: 82px;
+  top: -1px;
+  left: 0;
+  font-family: "Pretendard-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #bbbbbb;
+  font-size: 22px;
+  letter-spacing: -0.22px;
+  line-height: 30.8px;
+  white-space: nowrap;
+}
+
+.body .textbtn {
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Pretendard-Medium", Helvetica;
+  font-weight: 500;
+  color: #5f5bb8;
+  font-size: 18px;
+  letter-spacing: -0.18px;
+  line-height: 25.2px;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+:root {
+  --textb-6b-6b-6: rgba(182, 182, 182, 1);
+  --linefield-d9d9d9: rgba(217, 217, 217, 1);
+}
+
+.guide {
+  width: auto; /* 기본 상태에서 width는 auto */
+}
+
+.guide[style*="display: ;"] {
+  width: 1px; /* display: block일 때 width 1px */
+}
+
+.body .sb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #D9D9D9;
+  transition: border-color 0.3s ease; /* 트랜지션 추가 */
+}
+
+.body .sb:hover,
+.body .sb:focus-within {
+  border-color: #191919; /* hover 또는 focus-within 시 보더 컬러 변경 */
+}
+
+.body .dropdown {
+  display: none;
+  position: absolute;
+  top: 100%; /* 셀렉트박스 바로 아래로 위치 */
+  left: 0; /* 셀렉트박스 왼쪽에 맞춰서 위치 */
+  width: 100%;
+  border: 1px solid #D9D9D9;
+  border-radius: 8px;
+  background-color: white;
+  z-index: 10;
+  padding: 5px 0;
+  font-family: "Pretendard-Medium", Helvetica;
+}
+
+.body .dropdown option {
+  font-family: "Pretendard-Medium", Helvetica;
+  font-size: 16px;
+  color: #191919;
+}
+
+.body .sb.active .dropdown {
+  display: block;
+}
