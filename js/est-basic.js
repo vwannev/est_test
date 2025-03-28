@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const apiUrl = "https://api.notion.com/v1/databases/1c465b7c8e4d80d3a1b4f0e95a56ffe6/query";
         const proxyUrl = "https://cors.makemewanne.workers.dev/?url="; // 프록시 서버 주소
 
-        const response = await fetch(proxyUrl + encodeUROComponent(apiUrl), { // 프록시 서버를 통해 API 요청
+        const response = await fetch(proxyUrl + encodeURIComponent(apiUrl), { // 프록시 서버를 통해 API 요청
             method: "POST",
             headers: {
                 "Authorization": "Bearer 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",
