@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     selectBox.querySelector(".selected-value").textContent = optionText;
                     dropdown.style.display = "none"; // 드롭다운 닫기
                     resetLowerStages(index);
-                    updateResult();
+                    updateResult(); // 선택값에 따라 결과 업데이트
                 });
 
                 dropdown.appendChild(option);
@@ -137,6 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .map((selectBox) => selectBox.querySelector(".selected-value").textContent)
             .filter((text) => text !== "");
 
+        // 모든 단계를 선택해야 결과 박스가 보임
         if (selectedValues.length === 5) {
             const resultBox = document.querySelector(".resultbox");
             resultBox.style.display = "block";
@@ -144,13 +145,13 @@ document.addEventListener("DOMContentLoaded", function () {
             chargeNum.textContent = "20,000"; // 예시 견적값
         } else {
             const resultBox = document.querySelector(".resultbox");
-            resultBox.style.display = "none";
+            resultBox.style.display = "none"; // 5단계 선택하지 않으면 결과 박스 숨기기
         }
     }
 
     // 견적 정보 초기화
     function resetResult() {
         const resultBox = document.querySelector(".resultbox");
-        resultBox.style.display = "none";
+        resultBox.style.display = "none"; // 초기화 시 결과 박스 숨기기
     }
 });
