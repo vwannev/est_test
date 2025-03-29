@@ -1,33 +1,31 @@
 document.addEventListener("DOMContentLoaded", function () {
     const selectBoxes = document.querySelectorAll(".select-box");
 
-    // Notion API에서 데이터를 가져옴
     async function fetchNotionData() {
-        const notionToken = "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"; // 주어진 토큰
-        const notionDatabaseId = "1c465b7c8e4d80d3a1b4f0e95a56ffe6"; // 실제 데이터베이스 ID
+        const notionToken = "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";
+        const notionDatabaseId = "1c465b7c8e4d80d3a1b4f0e95a56ffe6"; 
 
         const apiUrl = "https://api.notion.com/v1/databases/1c465b7c8e4d80d3a1b4f0e95a56ffe6/query";
-        const proxyUrl = "https://cors.makemewanne.workers.dev/?url="; // 프록시 서버 주소
+        const proxyUrl = "https://cors.makemewanne.workers.dev/?url=";
 
-        const response = await fetch(proxyUrl + encodeURIComponent(apiUrl), { // 프록시 서버를 통해 API 요청
+        const response = await fetch(proxyUrl + encodeURIComponent(apiUrl), {
             method: "POST",
             headers: {
-                "Authorization": "Bearer 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",
+                "Authorization": "Bearer " + notionToken,
                 "Content-Type": "application/json",
-                "Notion-Version": "2021-05-13" // 최신 버전 확인
+                "Notion-Version": "2021-05-13"
             },
             body: JSON.stringify({})
         });
 
         if (response.ok) {
             const data = await response.json();
-            parseNotionData(data); // 데이터를 파싱하여 단계별로 옵션을 추가
+            parseNotionData(data); 
         } else {
             console.error("Notion API 호출 실패", response);
         }
     }
 
-    // Notion 데이터 파싱 및 셀렉트 박스에 옵션 추가
     function parseNotionData(data) {
         let stageData = {
             1: [],
@@ -46,16 +44,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // 각 단계에 맞게 셀렉트 박스에 옵션 추가
         const selectBoxes = document.querySelectorAll(".select-box");
         selectBoxes.forEach((selectBox, index) => {
             const dropdown = selectBox.querySelector(".dropdown");
             const stageNumber = index + 1;
 
-            // 기존 옵션 초기화
             dropdown.innerHTML = '';
 
-            // 해당 단계의 옵션 추가
             stageData[stageNumber].forEach((optionText) => {
                 const option = document.createElement("div");
                 option.classList.add("option");
@@ -63,9 +58,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 option.addEventListener("click", function () {
                     selectBox.querySelector(".selected-value").textContent = optionText;
-                    dropdown.style.display = "none"; // 드롭다운 닫기
+                    dropdown.style.display = "none"; 
                     resetLowerStages(index);
-                    updateResult(); // 선택값에 따라 결과 업데이트
+                    updateResult(); // 결과 업데이트
                 });
 
                 dropdown.appendChild(option);
@@ -73,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Notion 데이터 가져오기
     fetchNotionData();
 
     selectBoxes.forEach((selectBox, index) => {
@@ -83,37 +77,33 @@ document.addEventListener("DOMContentLoaded", function () {
         const guide = selectBox.querySelector(".guide");
 
         sb.addEventListener("click", function () {
-            // 다른 셀렉트 박스 닫기
             selectBoxes.forEach((otherSelectBox) => {
                 if (otherSelectBox !== selectBox) {
-                    otherSelectBox.querySelector(".dropdown").style.display = "none"; // 드롭다운 숨기기
+                    otherSelectBox.querySelector(".dropdown").style.display = "none"; 
                 }
             });
 
-            // 선택된 셀렉트박스를 토글
             if (dropdown.style.display === "none") {
-                dropdown.style.display = "block"; // 드롭다운 보이기
+                dropdown.style.display = "block"; 
             } else {
-                dropdown.style.display = "none"; // 드롭다운 숨기기
+                dropdown.style.display = "none"; 
             }
 
-            // 선택된 값이 있으면 guide 숨기기
             if (selectedValue.textContent.trim() !== "") {
-                guide.style.display = "none"; // 선택된 값이 있으면 guide 숨기기
+                guide.style.display = "none"; 
             } else {
-                guide.style.removeProperty("display"); // guide display 속성 없애기
+                guide.style.removeProperty("display");
             }
         });
     });
 
-    // 상위 단계 선택 시 하위 단계 초기화
     function resetLowerStages(currentIndex) {
         selectBoxes.forEach((selectBox, index) => {
             if (index > currentIndex) {
-                selectBox.querySelector(".selected-value").textContent = ""; // 선택값 초기화
-                selectBox.querySelector(".selected-value").style.display = "none"; // 선택값 숨기기
-                selectBox.querySelector(".guide").style.removeProperty("display"); // guide display 초기화
-                selectBox.querySelector(".dropdown").style.display = "none"; // 드롭다운 닫기
+                selectBox.querySelector(".selected-value").textContent = ""; 
+                selectBox.querySelector(".selected-value").style.display = "none"; 
+                selectBox.querySelector(".guide").style.removeProperty("display"); 
+                selectBox.querySelector(".dropdown").style.display = "none"; 
             }
         });
     }
@@ -123,35 +113,34 @@ document.addEventListener("DOMContentLoaded", function () {
     resetButton.addEventListener("click", function () {
         selectBoxes.forEach((selectBox) => {
             selectBox.querySelector(".dropdown").style.display = "none";
-            selectBox.querySelector(".guide").style.removeProperty("display"); // guide display 초기화
-            selectBox.querySelector(".selected-value").textContent = ""; // 선택된 값 초기화
-            selectBox.querySelector(".selected-value").style.display = "none"; // 선택된 값 숨기기
+            selectBox.querySelector(".guide").style.removeProperty("display");
+            selectBox.querySelector(".selected-value").textContent = ""; 
+            selectBox.querySelector(".selected-value").style.display = "none"; 
         });
-        // 견적 정보 초기화
         resetResult();
     });
 
     // 견적 결과 업데이트
-function updateResult() {
-    const selectedValues = Array.from(selectBoxes)
-        .map((selectBox) => selectBox.querySelector(".selected-value").textContent.trim()) // 공백 제거
-        .filter((text) => text !== ""); // 빈 문자열 필터링
+    function updateResult() {
+        const selectedValues = Array.from(selectBoxes)
+            .map((selectBox) => selectBox.querySelector(".selected-value").textContent.trim()) // trim으로 공백 제거
+            .filter((text) => text !== ""); 
 
-    // 모든 단계를 선택해야 결과 박스가 보임
-    if (selectedValues.length === 5) {
-        const resultBox = document.querySelector(".resultbox");
-        resultBox.style.display = "block"; // 결과 박스 보이기
-        const chargeNum = resultBox.querySelector(".charge-num .num");
-        chargeNum.textContent = "20,000"; // 예시 견적값
-    } else {
-        const resultBox = document.querySelector(".resultbox");
-        resultBox.style.display = "none"; // 5단계 선택하지 않으면 결과 박스 숨기기
+        console.log(selectedValues); // 디버깅을 위해 selectedValues 확인
+
+        if (selectedValues.length === 5) {
+            const resultBox = document.querySelector(".resultbox");
+            resultBox.style.display = "block"; 
+            const chargeNum = resultBox.querySelector(".charge-num .num");
+            chargeNum.textContent = "20,000"; 
+        } else {
+            const resultBox = document.querySelector(".resultbox");
+            resultBox.style.display = "none"; 
+        }
     }
-}
 
-    // 견적 정보 초기화
     function resetResult() {
         const resultBox = document.querySelector(".resultbox");
-        resultBox.style.display = "none"; // 초기화 시 결과 박스 숨기기
+        resultBox.style.display = "none"; 
     }
 });
