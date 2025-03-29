@@ -132,22 +132,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // 견적 결과 업데이트
-    function updateResult() {
-        const selectedValues = Array.from(selectBoxes)
-            .map((selectBox) => selectBox.querySelector(".selected-value").textContent)
-            .filter((text) => text !== "");
+function updateResult() {
+    const selectedValues = Array.from(selectBoxes)
+        .map((selectBox) => selectBox.querySelector(".selected-value").textContent.trim()) // 공백 제거
+        .filter((text) => text !== ""); // 빈 문자열 필터링
 
-        // 모든 단계를 선택해야 결과 박스가 보임
-        if (selectedValues.length === 5) {
-            const resultBox = document.querySelector(".resultbox");
-            resultBox.style.display = "block";
-            const chargeNum = resultBox.querySelector(".charge-num .num");
-            chargeNum.textContent = "20,000"; // 예시 견적값
-        } else {
-            const resultBox = document.querySelector(".resultbox");
-            resultBox.style.display = "none"; // 5단계 선택하지 않으면 결과 박스 숨기기
-        }
+    // 모든 단계를 선택해야 결과 박스가 보임
+    if (selectedValues.length === 5) {
+        const resultBox = document.querySelector(".resultbox");
+        resultBox.style.display = "block"; // 결과 박스 보이기
+        const chargeNum = resultBox.querySelector(".charge-num .num");
+        chargeNum.textContent = "20,000"; // 예시 견적값
+    } else {
+        const resultBox = document.querySelector(".resultbox");
+        resultBox.style.display = "none"; // 5단계 선택하지 않으면 결과 박스 숨기기
     }
+}
 
     // 견적 정보 초기화
     function resetResult() {
