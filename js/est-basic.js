@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const selectBoxes = document.querySelectorAll(".select-box");
 
-    // Notion API에서 데이터를 가져오기
+    // Notion API에서 데이터를 가져옴
     async function fetchNotionData() {
         const notionToken = "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"; // 주어진 토큰
         const notionDatabaseId = "1c465b7c8e4d80d3a1b4f0e95a56ffe6"; // 실제 데이터베이스 ID
