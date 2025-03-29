@@ -154,4 +154,4 @@ document.addEventListener("DOMContentLoaded", function () {
         const resultBox = document.querySelector(".resultbox");
         resultBox.style.display = "none"; // 초기화 시 결과 박스 숨기기
     }
-});  //원복
+}); 
