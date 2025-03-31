@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
     const selectBoxes = document.querySelectorAll(".select-box");
-
+    
+    if (selectBoxes.length === 0) {
+        console.error("선택한 요소가 없습니다.");
+    }
 async function fetchGoogleSheetData(selectedValue) {
     const apiUrl = `https://script.google.com/macros/s/AKfycbzEYPFsMnoSeKUeIBmOvuZSRvIVjK-3zErT3khvHptNrhsRjQzy9fFOLa5_9ijF2Trj/exec`;
 
