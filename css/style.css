@@ -47,8 +47,18 @@ a {
   width: 100%;
   height: 62px;
   background-color: #ffffff;
+  display: inline-flex;
 }
-
+.body .mainicon {
+ width: 24px;
+ height: 24px;
+ display: inline-block;
+    
+    background-image: url('img/headericon.png'); /* 아이콘 이미지 경로 */
+    background-size: cover; /* 요소 크기에 맞춰 아이콘 꽉 채우기 */
+    background-repeat: no-repeat; /* 이미지 반복 방지 */
+    background-position: center; /* 이미지 중앙 정렬 */
+}
 .body .title-text {
   position: absolute;
   width: 238px;
