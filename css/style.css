@@ -281,6 +281,10 @@ a {
   position: relative;
   flex: 0 0 auto;
   height: 31px;
+
+}
+
+.body .div-textbtn {
   margin-top:16px;
 }
 
@@ -348,7 +352,7 @@ a {
   white-space: nowrap;
 }
 
-.body .textbtn {
+.body .refresh_btn {
   position: relative;
   width: fit-content;
   margin-top: -1.00px;
