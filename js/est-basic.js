@@ -3,12 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const resultBox = document.querySelector(".resultbox");
     const selectTypeOptions = document.querySelectorAll(".select-type .option");
 
-    // 선택된 옵션을 구글 시트로 보내기
+    // 상품 유형 선택
     selectTypeOptions.forEach((option) => {
         option.addEventListener("click", function () {
-            if (option.classList.contains("selected")) {
-                sendToGoogleSheet(option.textContent);
-            }
+            selectTypeOptions.forEach((opt) => opt.classList.remove("selected"));
+            option.classList.add("selected");
+            updateResult();
+            sendToGoogleSheet(option.textContent);  // 선택된 옵션을 구글 시트로 전송
         });
     });
 
@@ -26,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             console.log(data);  // 응답 데이터 처리
-            searchInGoogleSheet(selectedValue);
         })
         .catch(error => console.error("전송 오류:", error));
     }
@@ -50,15 +50,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 페이지 로딩 시 resultbox는 숨김
     resultBox.style.display = "none";
-
-    // 상품 유형 선택
-    selectTypeOptions.forEach((option) => {
-        option.addEventListener("click", function () {
-            selectTypeOptions.forEach((opt) => opt.classList.remove("selected"));
-            option.classList.add("selected");
-            updateResult();
-        });
-    });
 
     // 각 드롭다운의 선택값을 업데이트하고 조건을 확인
     selectBoxes.forEach((selectBox) => {
