@@ -1,73 +1,66 @@
 document.addEventListener("DOMContentLoaded", function () {
     const selectBoxes = document.querySelectorAll(".select-box");
+    const resultBox = document.querySelector(".resultbox");
 
-    selectBoxes.forEach((selectBox, index) => {
-        const sb = selectBox.querySelector(".sb");
-        const dropdown = selectBox.querySelector(".dropdown");
-        const selectedValue = selectBox.querySelector(".selected-value");
-        const guide = selectBox.querySelector(".guide");
+    // 페이지 로딩 시 resultbox는 숨김
+    resultBox.style.display = "none";
 
-        sb.addEventListener("click", function () {
-            selectBoxes.forEach((otherSelectBox) => {
-                if (otherSelectBox !== selectBox) {
-                    otherSelectBox.querySelector(".dropdown").style.display = "none";
-                }
-            });
-
-            if (dropdown.style.display === "none") {
-                dropdown.style.display = "block"; 
-            } else {
-                dropdown.style.display = "none";
-            }
-
-            if (selectedValue.textContent.trim() !== "") {
-                guide.style.display = "none";
-            } else {
-                guide.style.removeProperty("display");
-            }
+    // 상품 유형 선택
+    const selectTypeOptions = document.querySelectorAll(".select-type .option");
+    selectTypeOptions.forEach((option) => {
+        option.addEventListener("click", function () {
+            selectTypeOptions.forEach((opt) => opt.classList.remove("selected"));
+            option.classList.add("selected");
+            updateResult();
         });
     });
 
-    function resetLowerStages(currentIndex) {
-        selectBoxes.forEach((selectBox, index) => {
-            if (index > currentIndex) {
-                selectBox.querySelector(".selected-value").textContent = "";
-                selectBox.querySelector(".selected-value").style.display = "none";
-                selectBox.querySelector(".guide").style.removeProperty("display");
-                selectBox.querySelector(".dropdown").style.display = "none";
+    // 각 드롭다운의 선택값을 업데이트하고 조건을 확인
+    selectBoxes.forEach((selectBox) => {
+        const dropdown = selectBox.querySelector(".dropdown");
+        const selectedValue = selectBox.querySelector(".selected-value");
+
+        dropdown.addEventListener("click", function (event) {
+            const option = event.target;
+            if (option.classList.contains("option")) {
+                selectedValue.textContent = option.textContent;
+                dropdown.style.display = "none"; // 드롭다운 숨기기
+                updateResult(); // 조건 충족 여부에 따른 결과 업데이트
             }
         });
-    }
 
-    const resetButton = document.querySelector(".textbtn");
-    resetButton.addEventListener("click", function () {
-        selectBoxes.forEach((selectBox) => {
-            selectBox.querySelector(".dropdown").style.display = "none";
-            selectBox.querySelector(".guide").style.removeProperty("display");
-            selectBox.querySelector(".selected-value").textContent = "";
-            selectBox.querySelector(".selected-value").style.display = "none";
+        // 드롭다운 열기/닫기
+        const sb = selectBox.querySelector(".sb");
+        sb.addEventListener("click", function () {
+            dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
         });
-        resetResult();
     });
 
     function updateResult() {
-        const selectedValues = Array.from(selectBoxes)
-            .map((selectBox) => selectBox.querySelector(".selected-value").textContent)
-            .filter((text) => text !== "");
+        // selectType의 선택 여부 확인
+        const isTypeSelected = document.querySelector(".select-type .option.selected") !== null;
 
-        if (selectedValues.length === 5) {
-            const resultBox = document.querySelector(".resultbox");
-            resultBox.style.display = "block";
-            const chargeNum = resultBox.querySelector(".charge-num .num");
-            chargeNum.textContent = "20,000"; // 예시 견적값
+        // 모든 select-box의 선택값이 비어있지 않은지 확인
+        const areAllSelected = Array.from(selectBoxes).every((selectBox) => {
+            return selectBox.querySelector(".selected-value").textContent.trim() !== "";
+        });
+
+        // 조건 충족 여부에 따른 resultbox 표시
+        if (isTypeSelected && areAllSelected) {
+            resultBox.style.display = "block"; // 결과 박스 표시
         } else {
-            const resultBox = document.querySelector(".resultbox");
-            resultBox.style.display = "none";
+            resultBox.style.display = "none"; // 결과 박스 숨김
         }
     }
 
-    function resetResult() {
-        const resultBox = document.querySelector(".resultbox");
-        resultBox.style.display = "none";
-    }
+    // 리셋 버튼 클릭 시 모든 선택값 초기화
+    const resetButton = document.querySelector(".refresh_btn");
+    resetButton.addEventListener("click", function () {
+        selectBoxes.forEach((selectBox) => {
+            selectBox.querySelector(".selected-value").textContent = "";
+            selectBox.querySelector(".dropdown").style.display = "none";
+        });
+        document.querySelector(".select-type .option.selected")?.classList.remove("selected");
+        resultBox.style.display = "none"; // 결과 박스 숨기기
+    });
 });
