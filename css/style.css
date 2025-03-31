@@ -234,7 +234,7 @@ a {
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: center;
-  gap: 16px 16px;
+  gap: 4px 16px;
   position: relative;
   align-self: stretch;
   width: 100%;
@@ -249,7 +249,7 @@ a {
   gap: 10px;
   position: relative;
   flex: 0 0 auto;
-  height: inherit;
+  height: 31px;
 }
 
 .body .text-wrapper {
