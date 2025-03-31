@@ -61,7 +61,7 @@ a {
   background-position: center; /* 이미지 중앙 정렬 */
 }
 
-.body .title-text {
+.body .title-text { /*포지션 제거*/
   width: 238px;
   top: 14px;
   left: 0;
