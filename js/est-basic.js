@@ -1,61 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const selectBoxes = document.querySelectorAll(".select-box");
 
-    // 구글 시트에서 데이터를 가져오는 함수
-    async function fetchGoogleSheetData(selectedValue) {
-        const apiUrl = `https://script.google.com/macros/s/AKfycbzEYPFsMnoSeKUeIBmOvuZSRvIVjK-3zErT3khvHptNrhsRjQzy9fFOLa5_9ijF2Trj/exec?selectedValue=${selectedValue}`;
-        
-        const response = await fetch(apiUrl);
-        if (response.ok) {
-            const data = await response.json();
-            parseSheetData(data); // 데이터를 파싱하여 셀렉트 박스에 옵션 추가
-        } else {
-            console.error("구글 시트 API 호출 실패", response);
-        }
-    }
-
-    // 구글 시트 데이터 파싱 및 셀렉트 박스에 옵션 추가
-    function parseSheetData(data) {
-        const stageData = {
-            1: [],
-            2: [],
-            3: [],
-            4: [],
-            5: [],
-        };
-
-        data.results.forEach((item) => {
-            if (item.selectedValue === data.selectedValue) {
-                stageData[1] = item['B2:B99']; // A열 선택 값에 해당하는 B열 데이터를 추가
-            }
-        });
-
-        const selectBoxes = document.querySelectorAll(".select-box");
-        selectBoxes.forEach((selectBox, index) => {
-            const dropdown = selectBox.querySelector(".dropdown");
-            const stageNumber = index + 1;
-
-            // 기존 옵션 초기화
-            dropdown.innerHTML = '';
-
-            // 해당 단계의 옵션 추가
-            stageData[stageNumber].forEach((optionText) => {
-                const option = document.createElement("div");
-                option.classList.add("option");
-                option.textContent = optionText;
-
-                option.addEventListener("click", function () {
-                    selectBox.querySelector(".selected-value").textContent = optionText;
-                    dropdown.style.display = "none"; // 드롭다운 닫기
-                    resetLowerStages(index);
-                    updateResult(); // 선택값에 따라 결과 업데이트
-                });
-
-                dropdown.appendChild(option);
-            });
-        });
-    }
-
     selectBoxes.forEach((selectBox, index) => {
         const sb = selectBox.querySelector(".sb");
         const dropdown = selectBox.querySelector(".dropdown");
