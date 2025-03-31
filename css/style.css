@@ -370,11 +370,9 @@ a {
   font-family: "Pretendard-Medium", Helvetica;
   font-size: 16px;
   color: #191919;
+    padding: 8px 12px; /* 옵션 내부 여백 재배포*/
 }
 
 .body .sb.active .dropdown {
   display: block;
-}
-.option {
-    padding: 8px 12px; /* 옵션 내부 여백 재배포*/
 }
