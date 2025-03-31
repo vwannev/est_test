@@ -1,25 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     const selectBoxes = document.querySelectorAll(".select-box");
-    
-    if (selectBoxes.length === 0) {
-        console.error("선택한 요소가 없습니다.");
-    }
-async function fetchGoogleSheetData(selectedValue) {
-    const apiUrl = `https://script.google.com/macros/s/AKfycbzEYPFsMnoSeKUeIBmOvuZSRvIVjK-3zErT3khvHptNrhsRjQzy9fFOLa5_9ijF2Trj/exec`;
 
-    try {
+    // 구글 시트에서 데이터를 가져오는 함수
+    async function fetchGoogleSheetData(selectedValue) {
+        const apiUrl = `https://script.google.com/macros/s/AKfycbzEYPFsMnoSeKUeIBmOvuZSRvIVjK-3zErT3khvHptNrhsRjQzy9fFOLa5_9ijF2Trj/exec?selectedValue=${selectedValue}`;
+        
         const response = await fetch(apiUrl);
         if (response.ok) {
             const data = await response.json();
-            console.log("구글 시트 데이터:", data);
             parseSheetData(data); // 데이터를 파싱하여 셀렉트 박스에 옵션 추가
         } else {
             console.error("구글 시트 API 호출 실패", response);
         }
-    } catch (error) {
-        console.error("구글 시트 데이터 가져오기 실패:", error);
     }
-}
 
     // 구글 시트 데이터 파싱 및 셀렉트 박스에 옵션 추가
     function parseSheetData(data) {
@@ -32,11 +25,8 @@ async function fetchGoogleSheetData(selectedValue) {
         };
 
         data.results.forEach((item) => {
-            for (let i = 1; i <= 5; i++) {
-                const depthKey = `${i}depth`;
-                if (item[depthKey]) {
-                    stageData[i].push(item[depthKey]);
-                }
+            if (item.selectedValue === data.selectedValue) {
+                stageData[1] = item['B2:B99']; // A열 선택 값에 해당하는 B열 데이터를 추가
             }
         });
 
