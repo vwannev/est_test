@@ -1,43 +1,37 @@
+// 먼저 axios를 import합니다
+import axios from 'axios';
+
 document.addEventListener("DOMContentLoaded", function () {
     const selectBoxes = document.querySelectorAll(".select-box");
     const resultBox = document.querySelector(".resultbox");
     const selectTypeOptions = document.querySelectorAll(".select-type .option");
 
-    // 상품 유형 선택
+    // 선택된 옵션을 구글 시트로 보내기
     selectTypeOptions.forEach((option) => {
         option.addEventListener("click", function () {
-            selectTypeOptions.forEach((opt) => opt.classList.remove("selected"));
-            option.classList.add("selected");
-            updateResult();
-            sendToGoogleSheet(option.textContent);  // 선택된 옵션을 구글 시트로 전송
+            if (option.classList.contains("selected")) {
+                sendToGoogleSheet(option.textContent);
+            }
         });
     });
 
     // 선택된 값 구글 시트로 보내기
     function sendToGoogleSheet(selectedValue) {
-        fetch('https://script.google.com/macros/s/AKfycbzJsit4cZjGykOhCZCbfTNG_ZeYIvP3dJ3jRWceFE9HQSjmzyVBOkpWB79ZVB5AvgxI/exec', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                selected: selectedValue  // 선택한 값을 동적으로 보내기
-            })
+        axios.post('https://script.google.com/macros/s/AKfycbzJsit4cZjGykOhCZCbfTNG_ZeYIvP3dJ3jRWceFE9HQSjmzyVBOkpWB79ZVB5AvgxI/exec', {
+            selected: selectedValue  // 선택한 값을 동적으로 보내기
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);  // 응답 데이터 처리
+        .then(response => {
+            console.log(response.data);  // 응답 데이터 처리
+            searchInGoogleSheet(selectedValue);
         })
         .catch(error => console.error("전송 오류:", error));
     }
 
     // 구글 시트에서 값 찾기
     function searchInGoogleSheet(valueToSearch) {
-        fetch('https://script.google.com/macros/s/AKfycbzJsit4cZjGykOhCZCbfTNG_ZeYIvP3dJ3jRWceFE9HQSjmzyVBOkpWB79ZVB5AvgxI/exec', {
-            method: "GET",
-        })
-        .then(response => response.json())
-        .then(data => {
+        axios.get('https://script.google.com/macros/s/AKfycbzJsit4cZjGykOhCZCbfTNG_ZeYIvP3dJ3jRWceFE9HQSjmzyVBOkpWB79ZVB5AvgxI/exec')
+        .then(response => {
+            const data = response.data;
             const found = data.values.find(row => row[0] === valueToSearch);
             if (found) {
                 console.log("값을 찾았습니다:", found);
@@ -50,6 +44,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 페이지 로딩 시 resultbox는 숨김
     resultBox.style.display = "none";
+
+    // 상품 유형 선택
+    selectTypeOptions.forEach((option) => {
+        option.addEventListener("click", function () {
+            selectTypeOptions.forEach((opt) => opt.classList.remove("selected"));
+            option.classList.add("selected");
+            updateResult();
+        });
+    });
 
     // 각 드롭다운의 선택값을 업데이트하고 조건을 확인
     selectBoxes.forEach((selectBox) => {
