@@ -45,8 +45,10 @@ a {
   position: relative;
   align-self: stretch;
   width: 100%;
-  height: 62px;
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .body .mainimg {
@@ -60,7 +62,7 @@ a {
 } 
 
 .body .title-text { 
-  position: absolute;
+  position: relative;
   width: 238px;
   top: 14px;
   left: 0;
@@ -71,6 +73,7 @@ a {
   letter-spacing: -0.22px;
   line-height: 30.8px;
   white-space: nowrap;
+  margin-bottom: 16px;
 }
 
 .body .contents {
