@@ -33,15 +33,21 @@
         </div>
         <div class="contents">
           <div class="info">
-            <p class="info-text">5단계의 분류를 차례대로 선택해주시면 간편 견적금액을 조회 할 수 있어요!</p>
+            <p class="info-text">상품 유형 선택 후, 상세 조건을 선택해주세요</p>
           </div>
+          <div class=select-type">
+            <div class="option">고소장비(AWP)</div>
+            <div class="option">지게차(FL)</div>
+            <div class="option">지게차(FL) 부품</div>
+            <div class="option">고소장비(AWP) 액세서리</div>
+            <div class="option">운반기기</div>
           <div class="select-section">
-            <!-- 1단계 선택 박스 -->
+            <!-- 브랜드 선택 박스 -->
             <div class="select-box">
               <div class="sb">
                 <div class="guide">
                   <div class="guidebox"></div>
-                  <div class="guidetext">1단계를 선택해주세요</div>
+                  <div class="guidetext">브랜드를 선택해주세요</div>
                 </div>
                 <div class="selected-value"></div> <!-- 선택값 표시할 div -->
                 <img class="element-chevron-down" src="img/chevron-down.png" />
@@ -95,12 +101,27 @@
               </div>
             </div>
 
+            <!-- 1단계 선택 박스 -->
+            <div class="select-box">
+              <div class="sb">
+                <div class="guide">
+                  <div class="guidebox"></div>
+                  <div class="guidetext">1단계 조건을 선택해주세요</div>
+                </div>
+                <div class="selected-value"></div> <!-- 선택값 표시할 div -->
+                <img class="element-chevron-down" src="img/chevron-down.png" />
+              </div>
+              <div class="dropdown" style="display: none;">
+                <div class="option"></div>
+              </div>
+            </div>
+
             <!-- 2단계 선택 박스 -->
             <div class="select-box">
               <div class="sb">
                 <div class="guide">
                   <div class="guidebox"></div>
-                  <div class="guidetext">2단계를 선택해주세요</div>
+                  <div class="guidetext">2단계 조건을 선택해주세요</div>
                 </div>
                 <div class="selected-value"></div> <!-- 선택값 표시할 div -->
                 <img class="element-chevron-down" src="img/chevron-down.png" />
@@ -115,22 +136,7 @@
               <div class="sb">
                 <div class="guide">
                   <div class="guidebox"></div>
-                  <div class="guidetext">3단계를 선택해주세요</div>
-                </div>
-                <div class="selected-value"></div> <!-- 선택값 표시할 div -->
-                <img class="element-chevron-down" src="img/chevron-down.png" />
-              </div>
-              <div class="dropdown" style="display: none;">
-                <div class="option"></div>
-              </div>
-            </div>
-
-            <!-- 4단계 선택 박스 -->
-            <div class="select-box">
-              <div class="sb">
-                <div class="guide">
-                  <div class="guidebox"></div>
-                  <div class="guidetext">4단계를 선택해주세요</div>
+                  <div class="guidetext">3단계 조건을 선택해주세요</div>
                 </div>
                 <div class="selected-value"></div> <!-- 선택값 표시할 div -->
                 <img class="element-chevron-down" src="img/chevron-down.png" />
@@ -140,12 +146,12 @@
               </div>
             </div>
 
-            <!-- 5단계 선택 박스 -->
+            <!-- 상품 선택 박스 -->
             <div class="select-box">
               <div class="sb">
                 <div class="guide">
                   <div class="guidebox"></div>
-                  <div class="guidetext">5단계를 선택해주세요</div>
+                  <div class="guidetext">상품을 선택해주세요</div>
                 </div>
                 <div class="selected-value"></div> <!-- 선택값 표시할 div -->
                 <img class="element-chevron-down" src="img/chevron-down.png" />
