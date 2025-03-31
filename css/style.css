@@ -49,15 +49,15 @@ a {
   background-color: #ffffff;
 }
 
-/*.body .mainicon {
-  width: 24px;
-  height: 24px;
+.body .mainicon {
+  width: 128px;
+  height: 128px;
   display: inline-block;
-  background-image: url('../img/headericon.png'); 
-  background-size: cover; 
+  background-image: url('../img/main.png'); 
+  background-size: contain; 
   background-repeat: no-repeat;
   background-position: center; 
-} */
+} 
 
 .body .title-text { 
   position: absolute;
