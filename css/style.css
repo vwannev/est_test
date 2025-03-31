@@ -96,7 +96,7 @@ a {
 
 .body .info-text {
   position: absolute;
-  width: 275px;
+  width: 100%;
   top: -1px;
   left: 0;
   font-family: "Pretendard-SemiBold", Helvetica;
@@ -116,7 +116,7 @@ a {
 
 .body .select-type .option {
   border: 1px solid #CCCCCC;
-  border-radious: 8px;
+  border-radius: 8px;
   width: 100%;
   padding: 4px;
   text-align: center;
