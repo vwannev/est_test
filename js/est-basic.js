@@ -33,12 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 구글 시트에서 값 찾기
     function searchInGoogleSheet(valueToSearch) {
-        const sheetId = "items";
-        const range = "A2:A99";  // A열 범위
-
         fetch('https://script.google.com/macros/s/AKfycbzJsit4cZjGykOhCZCbfTNG_ZeYIvP3dJ3jRWceFE9HQSjmzyVBOkpWB79ZVB5AvgxI/exec', {
-    method: "GET",
-})
+            method: "GET",
+        })
         .then(response => response.json())
         .then(data => {
             const found = data.values.find(row => row[0] === valueToSearch);
