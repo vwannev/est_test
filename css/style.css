@@ -107,6 +107,25 @@ a {
   line-height: 25.2px;
 }
 
+.body .select-type {
+  width:100%;
+  min-width:327px;
+  display:flex;
+  gap:8px;
+}
+
+.body .select-type .option {
+  border: 1px solid #CCCCCC;
+  border-radious: 8px;
+  width: 100%;
+  padding: 4px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #CCCCCC;
+}
+
 .body .select-section {
   min-width: 327px;
   gap: 8px;
