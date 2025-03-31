@@ -14,25 +14,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 선택된 값 구글 시트로 보내기
     function sendToGoogleSheet(selectedValue) {
-        const sheetId = "YOUR_SHEET_ID"; // 구글 시트 ID
-        const range = "A2:A99"; // A열 범위
-
-        const data = {
-            range: range,
-            values: [[selectedValue]]
-        };
-
-        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}:append`, {
+        fetch('https://script.google.com/macros/s/AKfycbzJsit4cZjGykOhCZCbfTNG_ZeYIvP3dJ3jRWceFE9HQSjmzyVBOkpWB79ZVB5AvgxI/exec', {
             method: "POST",
             headers: {
-                "Authorization": "Bearer YOUR_ACCESS_TOKEN",  // OAuth 2.0을 통해 얻은 토큰
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify({
+                selected: selectedValue  // 선택한 값을 동적으로 보내기
+            })
         })
         .then(response => response.json())
-        .then(result => {
-            console.log("데이터 전송 성공:", result);
+        .then(data => {
+            console.log(data);  // 응답 데이터 처리
             searchInGoogleSheet(selectedValue);
         })
         .catch(error => console.error("전송 오류:", error));
@@ -60,13 +53,11 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("검색 오류:", error));
     }
-});
 
     // 페이지 로딩 시 resultbox는 숨김
     resultBox.style.display = "none";
 
     // 상품 유형 선택
-    const selectTypeOptions = document.querySelectorAll(".select-type .option");
     selectTypeOptions.forEach((option) => {
         option.addEventListener("click", function () {
             selectTypeOptions.forEach((opt) => opt.classList.remove("selected"));
