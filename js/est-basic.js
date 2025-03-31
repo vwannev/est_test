@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 구글 시트에서 데이터를 가져오는 함수
     async function fetchGoogleSheetData(selectedValue) {
-        const apiUrl = `https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?selected=${selectedValue}`;
+        const apiUrl = `https://script.google.com/macros/s/AKfycbzEYPFsMnoSeKUeIBmOvuZSRvIVjK-3zErT3khvHptNrhsRjQzy9fFOLa5_9ijF2Trj/exec`;
         
         const response = await fetch(apiUrl);
         if (response.ok) {
