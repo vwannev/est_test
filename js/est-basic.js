@@ -1,6 +1,66 @@
 document.addEventListener("DOMContentLoaded", function () {
     const selectBoxes = document.querySelectorAll(".select-box");
     const resultBox = document.querySelector(".resultbox");
+    const selectTypeOptions = document.querySelectorAll(".select-type .option");
+
+    // 선택된 옵션을 구글 시트로 보내기
+    selectTypeOptions.forEach((option) => {
+        option.addEventListener("click", function () {
+            if (option.classList.contains("selected")) {
+                sendToGoogleSheet(option.textContent);
+            }
+        });
+    });
+
+    // 선택된 값 구글 시트로 보내기
+    function sendToGoogleSheet(selectedValue) {
+        const sheetId = "YOUR_SHEET_ID"; // 구글 시트 ID
+        const range = "A2:A99"; // A열 범위
+
+        const data = {
+            range: range,
+            values: [[selectedValue]]
+        };
+
+        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}:append`, {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer YOUR_ACCESS_TOKEN",  // OAuth 2.0을 통해 얻은 토큰
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log("데이터 전송 성공:", result);
+            searchInGoogleSheet(selectedValue);
+        })
+        .catch(error => console.error("전송 오류:", error));
+    }
+
+    // 구글 시트에서 값 찾기
+    function searchInGoogleSheet(valueToSearch) {
+        const sheetId = "YOUR_SHEET_ID";
+        const range = "A2:A99";  // A열 범위
+
+        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}`, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer YOUR_ACCESS_TOKEN",  // OAuth 2.0을 통해 얻은 토큰
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const found = data.values.find(row => row[0] === valueToSearch);
+            if (found) {
+                console.log("값을 찾았습니다:", found);
+            } else {
+                console.log("값을 찾을 수 없습니다.");
+            }
+        })
+        .catch(error => console.error("검색 오류:", error));
+    }
+});
 
     // 페이지 로딩 시 resultbox는 숨김
     resultBox.style.display = "none";
