@@ -1,88 +1,105 @@
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <style>
-      @media (max-width: 768px) {
-        body {
-          font-size: 16px;
-        }
-        .title-text {
-          font-size: 20px;
-        }
-        .info-text {
-          font-size: 14px;
-        }
-        .resultbox {
-          padding: 20px;
-        }
-      }
-    </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <div class="body">
-      <div class="wrap">
-        <div class="title">
-          <div class="title-text">AJ네트웍스 간편 견적 조회</div>
-          <span class="mainimg"></span>
-        </div>
-        <div class="contents">
-          <div class="info">
-            <p class="info-text">상품 유형 선택 후, 상세 조건을 선택해주세요</p>
-          </div>
-          <div class="select-type">
-            <div class="option">고소장비(AWP)</div>
-            <div class="option">지게차(FL)</div>
-            <div class="option">지게차(FL) 부품</div>
-            <div class="option">고소장비(AWP) 액세서리</div>
-            <div class="option">운반기기</div>
-          </div>
-          <div class="select-section">
-            <div class="select-box">
-              <div class="sb">
-                <div class="guide">
-                  <div class="guidebox"></div>
-                  <div class="guidetext">브랜드를 선택해주세요</div>
-                </div>
-                <div class="selected-value"></div>
-                <img class="element-chevron-down" src="img/chevron-down.png" />
-              </div>
-              <div class="dropdown" style="display: none;">
-                <div class="option"></div>
-              </div>
-            </div>
-            <!-- 나머지 선택 박스들 동일 -->
-          </div>
-          <div class="result-nbtn">
-            <div class="resultbox">
-              <div class="frame">
-                <div class="div-wrapper"><div class="text-wrapper">선택하신 상품의 견적금액은</div></div>
-                <div class="charge">
-                  <div class="charge-num"><div class="num">20,000</div></div>
-                  <div class="charge-sen"><div class="sen">원 입니다</div></div>
-                </div>
-              </div>
-            </div>
-            <div class="div-textbtn"><div class="refresh_btn">다시 조회하기</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
+// 먼저 axios를 import합니다
+import axios from 'axios';
 
-    <!-- axios CDN 추가 -->
-    <script type="module">
-      import axios from 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js';
+document.addEventListener("DOMContentLoaded", function () {
+    const selectBoxes = document.querySelectorAll(".select-box");
+    const resultBox = document.querySelector(".resultbox");
+    const selectTypeOptions = document.querySelectorAll(".select-type .option");
 
-      // axios 사용 예시
-      axios.get('API_URL')
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error('Error:', error);
+    // 선택된 옵션을 구글 시트로 보내기
+    selectTypeOptions.forEach((option) => {
+        option.addEventListener("click", function () {
+            if (option.classList.contains("selected")) {
+                sendToGoogleSheet(option.textContent);
+            }
         });
-    </script>
-  </body>
-</html>
+    });
+
+    // 선택된 값 구글 시트로 보내기
+    function sendToGoogleSheet(selectedValue) {
+        axios.post('https://script.google.com/macros/s/AKfycbzJsit4cZjGykOhCZCbfTNG_ZeYIvP3dJ3jRWceFE9HQSjmzyVBOkpWB79ZVB5AvgxI/exec', {
+            selected: selectedValue  // 선택한 값을 동적으로 보내기
+        })
+        .then(response => {
+            console.log(response.data);  // 응답 데이터 처리
+            searchInGoogleSheet(selectedValue);
+        })
+        .catch(error => console.error("전송 오류:", error));
+    }
+
+    // 구글 시트에서 값 찾기
+    function searchInGoogleSheet(valueToSearch) {
+        axios.get('https://script.google.com/macros/s/AKfycbzJsit4cZjGykOhCZCbfTNG_ZeYIvP3dJ3jRWceFE9HQSjmzyVBOkpWB79ZVB5AvgxI/exec')
+        .then(response => {
+            const data = response.data;
+            const found = data.values.find(row => row[0] === valueToSearch);
+            if (found) {
+                console.log("값을 찾았습니다:", found);
+            } else {
+                console.log("값을 찾을 수 없습니다.");
+            }
+        })
+        .catch(error => console.error("검색 오류:", error));
+    }
+
+    // 페이지 로딩 시 resultbox는 숨김
+    resultBox.style.display = "none";
+
+    // 상품 유형 선택
+    selectTypeOptions.forEach((option) => {
+        option.addEventListener("click", function () {
+            selectTypeOptions.forEach((opt) => opt.classList.remove("selected"));
+            option.classList.add("selected");
+            updateResult();
+        });
+    });
+
+    // 각 드롭다운의 선택값을 업데이트하고 조건을 확인
+    selectBoxes.forEach((selectBox) => {
+        const dropdown = selectBox.querySelector(".dropdown");
+        const selectedValue = selectBox.querySelector(".selected-value");
+
+        dropdown.addEventListener("click", function (event) {
+            const option = event.target;
+            if (option.classList.contains("option")) {
+                selectedValue.textContent = option.textContent;
+                dropdown.style.display = "none"; // 드롭다운 숨기기
+                updateResult(); // 조건 충족 여부에 따른 결과 업데이트
+            }
+        });
+
+        // 드롭다운 열기/닫기
+        const sb = selectBox.querySelector(".sb");
+        sb.addEventListener("click", function () {
+            dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+        });
+    });
+
+    function updateResult() {
+        // selectType의 선택 여부 확인
+        const isTypeSelected = document.querySelector(".select-type .option.selected") !== null;
+
+        // 모든 select-box의 선택값이 비어있지 않은지 확인
+        const areAllSelected = Array.from(selectBoxes).every((selectBox) => {
+            return selectBox.querySelector(".selected-value").textContent.trim() !== "";
+        });
+
+        // 조건 충족 여부에 따른 resultbox 표시
+        if (isTypeSelected && areAllSelected) {
+            resultBox.style.display = "block"; // 결과 박스 표시
+        } else {
+            resultBox.style.display = "none"; // 결과 박스 숨김
+        }
+    }
+
+    // 리셋 버튼 클릭 시 모든 선택값 초기화
+    const resetButton = document.querySelector(".refresh_btn");
+    resetButton.addEventListener("click", function () {
+        selectBoxes.forEach((selectBox) => {
+            selectBox.querySelector(".selected-value").textContent = "";
+            selectBox.querySelector(".dropdown").style.display = "none";
+        });
+        document.querySelector(".select-type .option.selected")?.classList.remove("selected");
+        resultBox.style.display = "none"; // 결과 박스 숨기기
+    });
+});
