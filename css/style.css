@@ -108,10 +108,10 @@ a {
 }
 
 .body .select-type {
-  width:100%;
-  min-width:327px;
-  display:flex;
-  gap:8px;
+  width: 100%;
+  min-width: 327px;
+  display: flex;
+  gap: 8px;
 }
 
 .body .select-type .option {
@@ -124,6 +124,16 @@ a {
   justify-content: center;
   align-items: center;
   color: #CCCCCC;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  font-family: "Pretendard", sans-serif;
+
+}
+
+.body .select-type .option:hover,
+.body .select-type .option:active {
+  border-color: #191919;
+  color: #191919;
 }
 
 .body .select-section {
