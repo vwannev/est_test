@@ -283,7 +283,7 @@ a {
   height: 31px;
 
 }
-
+/*css 수정 : 디비전 이름 변경*/
 .body .div-textbtn {
   margin-top:16px;
 }
@@ -351,7 +351,7 @@ a {
   line-height: 30.8px;
   white-space: nowrap;
 }
-
+/*css 수정 : 디비전 이름 변경*/
 .body .refresh_btn {
   position: relative;
   width: fit-content;
