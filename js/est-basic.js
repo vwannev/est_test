@@ -33,15 +33,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 구글 시트에서 값 찾기
     function searchInGoogleSheet(valueToSearch) {
-        const sheetId = "YOUR_SHEET_ID";
+        const sheetId = "items";
         const range = "A2:A99";  // A열 범위
 
-        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}`, {
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer YOUR_ACCESS_TOKEN",  // OAuth 2.0을 통해 얻은 토큰
-            }
-        })
+        fetch('https://script.google.com/macros/s/AKfycbzJsit4cZjGykOhCZCbfTNG_ZeYIvP3dJ3jRWceFE9HQSjmzyVBOkpWB79ZVB5AvgxI/exec', {
+    method: "GET",
+})
         .then(response => response.json())
         .then(data => {
             const found = data.values.find(row => row[0] === valueToSearch);
