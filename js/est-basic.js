@@ -1,18 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
     const selectBoxes = document.querySelectorAll(".select-box");
 
-    // 구글 시트에서 데이터를 가져오는 함수
-    async function fetchGoogleSheetData(selectedValue) {
-        const apiUrl = `https://script.google.com/macros/s/AKfycbzEYPFsMnoSeKUeIBmOvuZSRvIVjK-3zErT3khvHptNrhsRjQzy9fFOLa5_9ijF2Trj/exec`;
-        
+async function fetchGoogleSheetData(selectedValue) {
+    const apiUrl = `https://script.google.com/macros/s/AKfycbzEYPFsMnoSeKUeIBmOvuZSRvIVjK-3zErT3khvHptNrhsRjQzy9fFOLa5_9ijF2Trj/exec`;
+
+    try {
         const response = await fetch(apiUrl);
         if (response.ok) {
             const data = await response.json();
+            console.log("구글 시트 데이터:", data);
             parseSheetData(data); // 데이터를 파싱하여 셀렉트 박스에 옵션 추가
         } else {
             console.error("구글 시트 API 호출 실패", response);
         }
+    } catch (error) {
+        console.error("구글 시트 데이터 가져오기 실패:", error);
     }
+}
 
     // 구글 시트 데이터 파싱 및 셀렉트 박스에 옵션 추가
     function parseSheetData(data) {
